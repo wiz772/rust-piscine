@@ -1,4 +1,4 @@
-use std::{alloc::{Layout, alloc, dealloc}, ptr};
+use std::{alloc::{Layout, alloc, dealloc}, fmt::{Debug, Display}, ptr};
 
 
 pub struct LinkedList<T>{
@@ -50,13 +50,49 @@ impl<T> LinkedList<T>{
             ptr::write(node_ptr, new_node);
             self.head = node_ptr;
 
+            self.len += 1;
 
 
         }
 
     }
+
+    fn pop_front(&mut self){
+
+        unsafe {
+
+            let add_to_drop = self.head.add(0);
+
+
+
+        }
+
+    }
+
+    fn print_list(&self) where T: std::fmt::Debug {
+
+        let mut current = self.head;
+
+        unsafe{
+
+            while !current.is_null() {
+                let node = &*current;
+
+                println!("node value: {:?}, next: {:p}", node.value, node.next);
+
+                current = node.next;
+            }
+        }
+    }
 }
 
 fn main() {
-    println!("Hello, world!");
+
+    let mut list = LinkedList::new();
+    list.push_front(String::from("caca"));
+
+    list.push_front(String::from("coucou"));
+
+    list.print_list();
+
 }
