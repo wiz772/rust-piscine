@@ -21,55 +21,50 @@ Rather than relying on external libraries, the project emphasizes native Rust fe
 
 ## Days
 
-### Day 01 — Dynamic Array
+### Day 1 — DynamicArray
+Implementation of a generic dynamic array to explore manual memory allocation, raw pointers, capacity management, and resource cleanup.
 
-Implementation of a generic dynamic array inspired by Rust's `Vec<T>`.
+### Day 2 — LinkedList
+Implementation of a linked list to understand nodes, pointers, ownership, and dynamically linked data structures.
 
-Explores manual memory allocation, raw pointers, capacity management, element insertion and removal, and resource cleanup through `Drop`.
+### Day 3 — HashMap
+Implementation of a hash map to explore hashing, collision handling, key-value storage, and efficient lookups.
 
-### Day 02 — String
+### Day 4 — Stack, Queue, Deque
+Implementation of stack, queue, and double-ended queue data structures to understand different insertion and removal strategies.
 
-Implementation of a custom string type to explore UTF-8 encoding, byte storage, length, capacity, and string manipulation.
+### Day 5 — Iterators
+Exploration of Rust iterators, the `Iterator` trait, and lazy data processing.
 
-### Day 03 — Linked List
+### Day 6 — Smart Pointers
+Exploration of smart pointers such as `Box`, `Rc`, and `Arc`, along with ownership and shared data.
 
-Implementation of a linked list to understand dynamically allocated nodes, references, pointers, and ownership relationships.
+### Day 7 — Traits and Generics
+Practical exercises focused on generic programming, trait bounds, and reusable abstractions.
 
-### Day 04 — Stack and Queue
+### Day 8 — Error Handling
+Exploration of Rust's error-handling mechanisms, including `Result`, `Option`, and custom errors.
 
-Implementation of stack and queue data structures to explore different access patterns and their underlying operations.
+### Day 9 — Files and Parsing
+Working with file I/O, text processing, parsing, and structured data.
 
-### Day 05 — Hash Table
+### Day 10 — Algorithms
+Implementation of algorithms to explore problem-solving, complexity, searching, sorting, and data manipulation.
 
-Implementation of a hash table to study hashing, collision handling, key-value storage, and efficient lookups.
+### Day 11 — Threads and Concurrency
+Exploration of threads, synchronization, shared state, and safe concurrent programming.
 
-### Day 06 — Binary Heap
+### Day 12 — Async Rust
+Introduction to asynchronous programming, futures, and async execution.
 
-Implementation of a binary heap to understand heap invariants, priority queues, insertion, and removal operations.
+### Day 13 — Networking
+Exploration of network communication, sockets, protocols, and client-server interactions.
 
-### Day 07 — Binary Search Tree
+### Day 14 — Systems Programming
+Low-level programming exercises focused on operating-system interfaces, processes, resources, and system interactions.
 
-Implementation of a binary search tree to explore recursive data structures, insertion, searching, and traversal algorithms.
-
-### Day 08 — Graphs
-
-Exploration of graph representations and fundamental algorithms for traversing and processing connected structures.
-
-### Day 09 — Iterators
-
-Implementation and exploration of Rust iterators, the `Iterator` trait, and lazy data processing.
-
-### Day 10 — Generics and Traits
-
-Practical exercises focused on generic programming, trait bounds, abstraction, and reusable components.
-
-### Day 11 — File Storage
-
-Development of a small storage system to explore file I/O, serialization concepts, and persistent data.
-
-### Day 12 — Concurrency
-
-Exploration of threads, synchronization, shared state, and Rust's concurrency guarantees.
+### Day 15 — Final Project
+A final project combining concepts learned throughout the journey into a more complete Rust application.
 
 ## Philosophy
 
