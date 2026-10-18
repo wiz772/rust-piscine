@@ -1,0 +1,17 @@
+# Build artifacts
+/target/
+
+# Rust generated files
+**/*.rs.bk
+
+# Environment variables and secrets
+.env
+.env.*
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
