@@ -68,7 +68,7 @@ impl<T> LinkedList<T>{
             let next_node = &*self.head;
 
 
-            let new_ptr = next_node.next;
+            let new_ptr: *mut Node<T> = next_node.next;
             self.head = new_ptr;
 
             let node_layout: Layout = Layout::new::<Node<T>>();
@@ -83,7 +83,6 @@ impl<T> LinkedList<T>{
     }
 
     fn print_list(&self) where T: std::fmt::Debug {
-
         let mut current = self.head;
 
         unsafe{
@@ -96,6 +95,22 @@ impl<T> LinkedList<T>{
             }
         }
     }
+
+    fn front(&self) -> Option<&T> {
+        if self.head.is_null() {
+            return None;
+        }
+        
+        unsafe {
+
+            let value = &(*self.head).value;
+            Some(value)
+
+        }
+
+    }
+
+
 }
 
 fn main() {
