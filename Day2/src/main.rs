@@ -59,11 +59,24 @@ impl<T> LinkedList<T>{
 
     fn pop_front(&mut self){
 
-        unsafe {
+        if self.head.is_null() {
+            return;
+        }
 
-            let add_to_drop = self.head.add(0);
+        unsafe {    
+            let old_head = self.head;
+            let next_node = &*self.head;
 
 
+            let new_ptr = next_node.next;
+            self.head = new_ptr;
+
+            let node_layout: Layout = Layout::new::<Node<T>>();
+
+            ptr::drop_in_place(old_head);
+            dealloc(old_head as *mut u8, node_layout);
+            
+            self.len -= 1;
 
         }
 
@@ -79,7 +92,6 @@ impl<T> LinkedList<T>{
                 let node = &*current;
 
                 println!("node value: {:?}, next: {:p}", node.value, node.next);
-
                 current = node.next;
             }
         }
