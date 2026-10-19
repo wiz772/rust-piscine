@@ -30,6 +30,11 @@ impl<T> LinkedList<T>{
         }
     }
 
+    fn len(&self) -> usize {
+
+        self.len
+    }
+
     fn is_empty(&self) -> bool{
         self.len == 0
     }
@@ -52,7 +57,6 @@ impl<T> LinkedList<T>{
 
             self.len += 1;
 
-
         }
 
     }
@@ -65,10 +69,8 @@ impl<T> LinkedList<T>{
 
         unsafe {    
             let old_head = self.head;
-            let next_node = &*self.head;
 
-
-            let new_ptr: *mut Node<T> = next_node.next;
+            let new_ptr: *mut Node<T> = (*old_head).next;
             self.head = new_ptr;
 
             let node_layout: Layout = Layout::new::<Node<T>>();
@@ -110,6 +112,80 @@ impl<T> LinkedList<T>{
 
     }
 
+    fn get_last_node(&self) -> Option<*mut Node<T>>{
+
+        if self.is_empty(){
+            return None;
+        }
+
+        let mut current = self.head;
+
+        unsafe{
+            while !(*current).next.is_null() {
+                let node = &*current;
+                current = node.next;
+            }
+
+            Some(current)
+        }
+    }
+
+    fn push_back(&mut self, value: T){
+        let node_layout: Layout = Layout::new::<Node<T>>();
+        let mut new_node: Node<T> = Node::new(value);
+
+        unsafe{
+            let node_ptr = alloc(node_layout) as *mut Node<T>;
+        
+            if node_ptr.is_null(){
+                panic!("Echec");
+            }
+
+            ptr::write(node_ptr, new_node);
+
+            if self.is_empty(){
+                self.head = node_ptr;
+
+            } else {
+                let last_node = self.get_last_node();
+
+                if let Some(node) = last_node{
+
+                    (*node).next = node_ptr;
+                }
+            }
+
+            self.len += 1;
+        }
+    }
+
+    fn pop_back(&mut self){
+
+        if self.is_empty(){
+            return;
+        }
+
+        if self.len == 1 {
+            self.clear();
+
+        }else{
+            let last_node = self.get_last_node();
+
+            if let Some(node) = last_node{
+
+                unsafe{
+                    ptr::drop_in_place(node);
+                    let node_layout: Layout = Layout::new::<Node<T>>();
+                    dealloc(node as *mut u8, node_layout);
+
+                }
+
+            }
+
+            self.len -= 1;
+        }
+    }
+
     fn back(&self) -> Option<&T> {
 
         if self.head.is_null() {
@@ -118,28 +194,50 @@ impl<T> LinkedList<T>{
 
         unsafe {
 
-            let mut current = self.head;
+            let last_node = self.get_last_node();
 
-            while !(*current).next.is_null() {
-                current = (*current).next;
+            if let Some(node) = last_node{
+
+                let value = &(*node).value;
+
+                return Some(value);
+
             }
 
-            let value = &(*current).value;
-            Some(value)
+            None
+        
+        }
 
+    }
+
+    fn clear(&mut self) {
+
+        while !self.is_empty() {
+
+            self.pop_front();
 
         }
 
     }
 
+}
+
+impl<T> Drop for LinkedList<T> {
+
+    fn drop(&mut self){
+
+        self.clear();
+
+    }
 
 }
 
 fn main() {
 
     let mut list = LinkedList::new();
-    list.push_front(String::from("caca"));
 
+    list.push_front(String::from("caca"));
+    
     list.push_front(String::from("coucou"));
 
     list.print_list();
