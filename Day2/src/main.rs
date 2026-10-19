@@ -110,6 +110,28 @@ impl<T> LinkedList<T>{
 
     }
 
+    fn back(&self) -> Option<&T> {
+
+        if self.head.is_null() {
+            return None;
+        }
+
+        unsafe {
+
+            let mut current = self.head;
+
+            while !(*current).next.is_null() {
+                current = (*current).next;
+            }
+
+            let value = &(*current).value;
+            Some(value)
+
+
+        }
+
+    }
+
 
 }
 
@@ -121,5 +143,7 @@ fn main() {
     list.push_front(String::from("coucou"));
 
     list.print_list();
+
+    println!("Back: {:?}", list.back());
 
 }
