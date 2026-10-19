@@ -159,28 +159,30 @@ impl<T> LinkedList<T>{
         }
     }
 
-    fn pop_back(&mut self){
-
-        if self.is_empty(){
+    fn pop_back(&mut self) {
+        if self.is_empty() {
             return;
         }
 
         if self.len == 1 {
             self.clear();
+            return;
+        }
 
-        }else{
-            let last_node = self.get_last_node();
+        unsafe {
+            let mut current = self.head;
 
-            if let Some(node) = last_node{
-
-                unsafe{
-                    ptr::drop_in_place(node);
-                    let node_layout: Layout = Layout::new::<Node<T>>();
-                    dealloc(node as *mut u8, node_layout);
-
-                }
-
+            while !(*(*current).next).next.is_null() {
+                current = (*current).next;
             }
+
+            let last_node = (*current).next;
+
+            (*current).next = ptr::null_mut();
+
+            ptr::drop_in_place(last_node);
+            let node_layout = Layout::new::<Node<T>>();
+            dealloc(last_node as *mut u8, node_layout);
 
             self.len -= 1;
         }
@@ -243,5 +245,10 @@ fn main() {
     list.print_list();
 
     println!("Back: {:?}", list.back());
+
+    list.pop_back();
+
+    println!("Back: {:?}", list.back());
+
 
 }
